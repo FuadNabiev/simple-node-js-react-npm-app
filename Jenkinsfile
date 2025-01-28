@@ -1,15 +1,21 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'nodejs'  // Use the NodeJS installation name from Global Tool Configuration
+    }
     stages {
-        stage('Build') { 
+        stage('Install dependencies') {
             steps {
-                sh 'npm install'
-                sh 'npm install testcafe'
+                script {
+                    sh 'npm install'
+                }
             }
         }
-        stage('Test') {
+        stage('Run Tests') {
             steps {
-                sh 'testcafe chrome ./tests/example.test.js'
+                script {
+                    sh 'testcafe chrome ./tests/example.test.js'
+                }
             }
         }
     }
